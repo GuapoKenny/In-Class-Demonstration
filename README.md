@@ -71,7 +71,9 @@ This chart shows the average salary for each NFL position. It helps answer the f
 
 **Main takeaway:** Average salaries differ across NFL positions. Some positions, especially linemen, quarterbacks, and linebackers, appear to have higher average salaries than others.
 
-![Average Salary by Position](average_salary_by_position.png)
+<img width="1290" height="858" alt="Average Salary Yellow" src="https://github.com/user-attachments/assets/f605dbc7-74a5-4140-9014-4cb10648e282" />
+
+
 
 ### Figure 2: High Market Value Positions
 
@@ -79,7 +81,8 @@ This chart compares high market-value positions, such as quarterbacks, offensive
 
 **Main takeaway:** Higher market-value positions tend to have higher average salaries, which supports the idea that salary differences are connected to position value and scarcity.
 
-![High Market Value Positions](high_market_value_positions.png)
+<img width="1290" height="858" alt="Average Position" src="https://github.com/user-attachments/assets/68341f1f-a9e5-4d2e-91f0-f41ba38f8703" />
+
 
 ### Figure 3: Salary Trends Over Time
 
@@ -87,7 +90,8 @@ This line chart shows how average salaries changed over time by position.
 
 **Main takeaway:** Salary patterns changed between 2011 and 2018. Some positions experienced stronger salary growth than others.
 
-![Salary Trends Over Time](salary_trends_over_time.png)
+<img width="1290" height="858" alt="Salary Trends" src="https://github.com/user-attachments/assets/0455a6b3-c675-48e2-b6a8-b3554262dc40" />
+
 
 ### Figure 4: Salary Trends Across Key Positions
 
@@ -95,7 +99,8 @@ This chart focuses on selected key positions, including quarterback, offensive l
 
 **Main takeaway:** Looking only at key positions makes it easier to compare salary growth patterns over time.
 
-![Key Position Salary Trends](key_position_salary_trends.png)
+<img width="1290" height="858" alt="Key Positions" src="https://github.com/user-attachments/assets/414adf39-262f-4760-b2eb-15b7479f6318" />
+
 
 ### Figure 5: Percent Salary Growth by Position
 
@@ -103,7 +108,8 @@ This chart shows which positions experienced the largest percentage growth in sa
 
 **Main takeaway:** Some positions grew faster than others, suggesting that the market value of certain NFL roles changed over time.
 
-![Percent Salary Growth](percent_salary_growth.png)
+<img width="1290" height="858" alt="Percent Growth" src="https://github.com/user-attachments/assets/cdf7f54c-3db1-4261-93db-ec5246b9f615" />
+
 
 ## Main Results
 
@@ -114,18 +120,6 @@ The results also show that salary patterns changed over time. Certain positions 
 Overall, the project supports the idea that NFL salaries reflect labor market differences across position, year, and market value.
 
 ## Files in This Repository
-
-| File | Description |
-|---|---|
-| README.md | Explains the project motivation, research questions, data, methods, figures, and results |
-| nfl_salary.xlsx | Main salary dataset used for the project |
-| nfl_salary_analysis.R | R script used to clean the data, calculate summary statistics, and create graphs |
-| average_salary_by_position.png | Bar chart showing average salary by position |
-| high_market_value_positions.png | Bar chart highlighting quarterbacks and linemen |
-| salary_trends_over_time.png | Line chart showing salary trends over time |
-| key_position_salary_trends.png | Line chart for selected key positions |
-| percent_salary_growth.png | Bar chart showing percent salary growth by position |
-| NFL_Salary_Project_Proposal.pptx | PowerPoint presentation summarizing the project |
 
 ## Conclusion
 
