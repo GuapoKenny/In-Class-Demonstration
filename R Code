@@ -1,0 +1,157 @@
+# NFL Salary Analysis Project
+# Kenny Okwaraoha
+
+# Load packages
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(scales)
+
+# Load dataset
+nfl_salary <- read_excel("nfl_salary.xlsx")
+
+# Clean column names
+nfl_salary <- nfl_salary %>%
+  clean_names()
+
+# View column names
+names(nfl_salary)
+
+# Reshape data from wide to long format
+nfl_salary_long <- nfl_salary %>%
+  pivot_longer(
+    cols = -year,
+    names_to = "position",
+    values_to = "salary"
+  ) %>%
+  filter(!is.na(salary))
+
+# Summary statistics by year and position
+summary_stats_long <- nfl_salary_long %>%
+  group_by(year, position) %>%
+  summarize(
+    mean_salary = mean(salary, na.rm = TRUE),
+    median_salary = median(salary, na.rm = TRUE),
+    sd_salary = sd(salary, na.rm = TRUE),
+    min_salary = min(salary, na.rm = TRUE),
+    max_salary = max(salary, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Average salary by position
+avg_salary_position <- nfl_salary_long %>%
+  group_by(position) %>%
+  summarize(
+    average_salary = mean(salary, na.rm = TRUE),
+    median_salary = median(salary, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(average_salary))
+
+# Figure 1: Average salary by position
+ggplot(avg_salary_position, aes(x = reorder(position, average_salary), y = average_salary)) +
+  geom_col(fill = "gold") +
+  coord_flip() +
+  scale_y_continuous(labels = dollar) +
+  labs(
+    title = "Average NFL Salary by Position",
+    x = "Position",
+    y = "Average Salary"
+  ) +
+  theme_minimal()
+
+ggsave("average_salary_by_position.png", width = 9, height = 6)
+
+# Figure 2: High market value positions
+avg_salary_position <- avg_salary_position %>%
+  mutate(
+    position_type = ifelse(
+      position %in% c("quarterback", "offensive_lineman", "defensive_lineman"),
+      "High Market Value Position",
+      "Other Position"
+    )
+  )
+
+ggplot(avg_salary_position, aes(x = reorder(position, average_salary), y = average_salary, fill = position_type)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = dollar) +
+  labs(
+    title = "Average Salary by Position: High Market Value Positions Highlighted",
+    x = "Position",
+    y = "Average Salary",
+    fill = "Position Type"
+  ) +
+  theme_minimal()
+
+ggsave("high_market_value_positions.png", width = 9, height = 6)
+
+# Salary trends over time
+salary_trends <- nfl_salary_long %>%
+  group_by(year, position) %>%
+  summarize(
+    average_salary = mean(salary, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Figure 3: Salary trends over time
+ggplot(salary_trends, aes(x = year, y = average_salary, color = position)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  scale_y_continuous(labels = dollar) +
+  labs(
+    title = "NFL Salary Trends Over Time by Position",
+    x = "Year",
+    y = "Average Salary",
+    color = "Position"
+  ) +
+  theme_minimal()
+
+ggsave("salary_trends_over_time.png", width = 9, height = 6)
+
+# Figure 4: Key position salary trends
+key_positions <- salary_trends %>%
+  filter(position %in% c("quarterback", "offensive_lineman", "defensive_lineman",
+                         "wide_receiver", "running_back", "cornerback"))
+
+ggplot(key_positions, aes(x = year, y = average_salary, color = position)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = dollar) +
+  labs(
+    title = "Salary Trends Over Time Across Key NFL Positions",
+    x = "Year",
+    y = "Average Salary",
+    color = "Position"
+  ) +
+  theme_minimal()
+
+ggsave("key_position_salary_trends.png", width = 9, height = 6)
+
+# Salary growth by position
+salary_growth <- salary_trends %>%
+  group_by(position) %>%
+  arrange(year) %>%
+  summarize(
+    first_year = first(year),
+    last_year = last(year),
+    first_salary = first(average_salary),
+    last_salary = last(average_salary),
+    salary_growth = last_salary - first_salary,
+    percent_growth = ((last_salary - first_salary) / first_salary) * 100,
+    .groups = "drop"
+  ) %>%
+  arrange(desc(percent_growth))
+
+# Figure 5: Percent salary growth
+ggplot(salary_growth, aes(x = reorder(position, percent_growth), y = percent_growth)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(
+    title = "Percent Growth in NFL Salaries by Position",
+    x = "Position",
+    y = "Percent Salary Growth"
+  ) +
+  theme_minimal()
+
+ggsave("percent_salary_growth.png", width = 9, height = 6)
